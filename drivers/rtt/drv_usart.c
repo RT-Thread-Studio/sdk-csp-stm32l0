@@ -6,6 +6,7 @@
  * Change Logs:
  * Date           Author       Notes
  * 2018-10-30     SummerGift   first version
+ * 2020-05-18     chenyaxing   add GPIOE define check for L052
  */
 #include "string.h"
 #include "stdlib.h"
@@ -303,7 +304,7 @@ static rt_err_t stm32_gpio_clk_enable(GPIO_TypeDef *gpiox)
         __HAL_RCC_GPIOG_CLK_ENABLE();
         break;
 #endif
-#if defined(__HAL_RCC_GPIOH_CLK_ENABLE)
+#if defined(RCC_IOPENR_GPIOHEN)
     case (uint32_t)GPIOH:
         __HAL_RCC_GPIOH_CLK_ENABLE();
         break;
@@ -393,13 +394,19 @@ static rt_err_t stm32_gpio_configure(struct stm32_uart_config *config)
       { .pin_index = GET_PIN(C, 10), .afs[0] = {.uart_num = UART_IS_TX|4, .af_num = 6}},
       { .pin_index = GET_PIN(C, 11), .afs[0] = {.uart_num = UART_IS_RX|4, .af_num = 6}},
       { .pin_index = GET_PIN(C, 12), .afs[0] = {.uart_num = UART_IS_TX|5, .af_num = 2}},
+
+#ifdef GPIOD
       { .pin_index = GET_PIN(D,  2), .afs[0] = {.uart_num = UART_IS_RX|5, .af_num = 6}},
       { .pin_index = GET_PIN(D,  5), .afs[0] = {.uart_num = UART_IS_TX|2, .af_num = 0}},
       { .pin_index = GET_PIN(D,  6), .afs[0] = {.uart_num = UART_IS_RX|2, .af_num = 0}},
-      { .pin_index = GET_PIN(E,  8), .afs[0] = {.uart_num = UART_IS_TX|4, .af_num = 6}},
-      { .pin_index = GET_PIN(E,  9), .afs[0] = {.uart_num = UART_IS_RX|4, .af_num = 6}},
-      { .pin_index = GET_PIN(E, 10), .afs[0] = {.uart_num = UART_IS_TX|5, .af_num = 6}},
-      { .pin_index = GET_PIN(E, 11), .afs[0] = {.uart_num = UART_IS_RX|5, .af_num = 6}},
+#endif
+      
+#ifdef GPIOE
+          { .pin_index = GET_PIN(E,  8), .afs[0] = {.uart_num = UART_IS_TX|4, .af_num = 6}},
+          { .pin_index = GET_PIN(E,  9), .afs[0] = {.uart_num = UART_IS_RX|4, .af_num = 6}},
+          { .pin_index = GET_PIN(E, 10), .afs[0] = {.uart_num = UART_IS_TX|5, .af_num = 6}},
+          { .pin_index = GET_PIN(E, 11), .afs[0] = {.uart_num = UART_IS_RX|5, .af_num = 6}},
+#endif
    };
 
    /* get tx/rx pin index */

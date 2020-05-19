@@ -789,7 +789,7 @@ int rt_hw_pin_init(void)
     __HAL_RCC_GPIOG_CLK_ENABLE();
 #endif
 
-#if defined(__HAL_RCC_GPIOH_CLK_ENABLE)
+#if defined(RCC_IOPENR_GPIOHEN)
     __HAL_RCC_GPIOH_CLK_ENABLE();
 #endif
 
