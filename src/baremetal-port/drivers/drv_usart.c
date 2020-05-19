@@ -12,7 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "uart_config.h"
-#include <board_cfg.h>
+#include <board.h>
 
 #define __STM32_PORT(port)  GPIO##port##_BASE
 #define GET_PIN(PORTx,PIN) (long)((16 * ( ((long)__STM32_PORT(PORTx) - (long)GPIOA_BASE)/(0x0400UL) )) + PIN)
