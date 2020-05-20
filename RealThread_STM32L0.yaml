@@ -13,7 +13,7 @@ series:
       - CRC calculation unit, 96-bit unique ID
       - USB 2.0 crystal-less, battery charging detection and LPM
       - True RNG and firewall protection
-  series_name: RealThread_STM32L0xx
+  series_name: STM32L0
   peripheral: {}
   sub_series:
   - sub_series_name: STM32L010
