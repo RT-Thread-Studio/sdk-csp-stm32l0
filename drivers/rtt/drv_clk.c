@@ -51,6 +51,7 @@ void system_clock_config(int target_freq_mhz)
         Error_Handler();
     }
 }
+
 int clock_information(void)
 {
     LOG_D("System Clock information");
@@ -66,4 +67,3 @@ void clk_init(char *clk_source, int source_freq, int target_freq)
 {
     system_clock_config(target_freq);
 }
-
