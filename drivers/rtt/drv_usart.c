@@ -386,6 +386,8 @@ static rt_err_t stm32_gpio_configure(struct stm32_uart_config *config)
       { .pin_index = GET_PIN(A,  1), .afs[0] = {.uart_num = UART_IS_RX|4, .af_num = 6}},
       { .pin_index = GET_PIN(A,  2), .afs[0] = {.uart_num = UART_IS_TX|2, .af_num = 4}},
       { .pin_index = GET_PIN(A,  3), .afs[0] = {.uart_num = UART_IS_RX|2, .af_num = 4}},
+      { .pin_index = GET_PIN(A,  2), .afs[0] = {.uart_num = UART_IS_TX|10, .af_num = 6}},
+      { .pin_index = GET_PIN(A,  3), .afs[0] = {.uart_num = UART_IS_RX|10, .af_num = 6}},
       { .pin_index = GET_PIN(A,  9), .afs[0] = {.uart_num = UART_IS_TX|1, .af_num = 4}},
       { .pin_index = GET_PIN(A, 10), .afs[0] = {.uart_num = UART_IS_RX|1, .af_num = 4}},
       { .pin_index = GET_PIN(A, 14), .afs[0] = {.uart_num = UART_IS_TX|2, .af_num = 4}},
@@ -413,7 +415,15 @@ static rt_err_t stm32_gpio_configure(struct stm32_uart_config *config)
    };
 
    /* get tx/rx pin index */
-   uart_num = config->name[4] - '0';
+   if(config->name[0] == 'l')
+   {
+       /*if the "config->name" first character is "l", which means low-power serial port */
+       uart_num = 9 + config->name[6] - '0';
+   }
+   else
+   {
+       uart_num = config->name[4] - '0';
+   }
    tx_pin_num = stm32_get_pin(tx_port, tx_pin);
 
    for (index = 0; index < sizeof(uart_afs) / sizeof(struct gpio_uart_af); index = index + 2)
